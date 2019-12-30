@@ -28,24 +28,24 @@ using namespace std;
 
 class Graph
 {
-    int V;    // No. of vertices
+    int Vertices;    // No. of vertices
     list<int> *adj;    // Pointer to an array containing adjacency lists
     bool isCyclicUtil(int v, bool visited[], bool *rs);  // used by isCyclic()
 public:
-    Graph(int V);   // Constructor
+    Graph(int Vertices);   // Constructor
     void addEdge(int v, int w);   // to add an edge to graph
     bool isCyclic();    // returns true if there is a cycle in this graph
 };
 
-Graph::Graph(int V)
+Graph::Graph(int Vertices)
 {
-    this->V = V;
-    adj = new list<int>[V];
+    this->Vertices = Vertices;
+    adj = new list<int>[Vertices];
 }
 
 void Graph::addEdge(int v, int w)
 {
-    adj[v].push_back(w); // Add w to v’s list.
+    adj[v].push_back(w); // Add w to vï¿½s list.
 }
 
 // This function is a variation of DFSUtil() in https://www.geeksforgeeks.org/archives/18212
@@ -78,9 +78,9 @@ bool Graph::isCyclic()
 {
     // Mark all the vertices as not visited and not part of recursion
     // stack
-    bool *visited = new bool[V];
-    bool *recStack = new bool[V];
-    for(int i = 0; i < V; i++)
+    bool *visited = new bool[Vertices];
+    bool *recStack = new bool[Vertices];
+    for(int i = 0; i < Vertices; i++)
     {
         visited[i] = false;
         recStack[i] = false;
@@ -88,32 +88,31 @@ bool Graph::isCyclic()
 
     // Call the recursive helper function to detect cycle in different
     // DFS trees
-    for(int i = 0; i < V; i++)
+    for(int i = 0; i < Vertices; i++)
         if (isCyclicUtil(i, visited, recStack))
             return true;
 
     return false;
 }
 
-int main()
+void main()
 {
     // Create a graph given in the above diagram
-    int n,m,a,b,i;
+    int no_of_vertices,no_of_edges,value1,value2;
     cout<<"Enter the number of vertices\n";
-    cin>>n;
+    cin>>no_of_vertices;
     cout<<"Enter the number of edges\n";
-    cin>>m;
-    Graph g1(n);
-    for(i=0;i<m;i++)
+    cin>>no_of_edges;
+    Graph g1(no_of_vertices);
+    for(int i=0;i<no_of_edges;i++)
     {
         cout<<"Enter edge no "<<i+1<<"\n";
-        cin>>a>>b;
-        g1.addEdge(a,b);
+        cin >> value1 >> value2;
+        g1.addEdge(value1,value2);
     }
 
     if(g1.isCyclic())
         cout << "Graph contains cycle";
     else
         cout << "Graph doesn't contain cycle";
-    return 0;
 }

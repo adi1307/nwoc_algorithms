@@ -8,8 +8,9 @@
 // Sample Output:
 // The value of nCr for numbers 5 and 3 is 10
 
-
 //author:Aditya Kothari
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -18,19 +19,19 @@ using namespace std;
 
 long long f[100001];
 
-ll pow(ll a, ll b, ll MOD)
+ll pow(ll val_1, ll val_2, ll MOD)
 {
- ll x=1,y=a;
- while(b > 0)
+ ll x=1,y=val_1;
+ while(val_2 > 0)
  	{
- 		if(b%2 == 1)
+ 		if(val_2%2 == 1)
  	{
  		x=(x*y);
  		if(x>MOD) x%=MOD;
  	}
  	y = (y*y);
  	if(y>MOD) y%=MOD;
- 	b /= 2;
+ 	val_2 /= 2;
  	}
  return x;
 }
@@ -38,26 +39,26 @@ ll pow(ll a, ll b, ll MOD)
  Using Euler's Theorem
  a^(phi(m)) = 1 (mod m)
  a^(-1) = a^(m-2) (mod m) */
-ll InverseEuler(ll n, ll MOD)
+ll InverseEuler(ll obj, ll MOD)
 {
- return pow(n,MOD-2,MOD);
+ return pow(obj,MOD-2,MOD);
 }
 
-ll C(ll n, ll r, ll MOD)
+ll C(ll obj, ll sam, ll MOD)
 {
 
- return (f[n]*((InverseEuler(f[r], MOD) * InverseEuler(f[n-r], MOD)) % MOD)) % MOD;
+ return (f[obj]*((InverseEuler(f[sam], MOD) * InverseEuler(f[obj-sam], MOD)) % MOD)) % MOD;
 }
 
-int main(){
+void main(){
 	f[0] = 1;
 	for(int i = 1 ; i <= 100000 ; i++)
 		f[i] = (f[i-1]*i)%INF;
-    ll n,r,ans;
-    cout<<"Enter the value of N\n";
-    cin>>n;
-    cout<<"Enter the value of R\n";
-    cin>>r;
- 	ans=C(n,r,INF);
- 	cout<<"The value of nCr for numbers "<<n<<" and "<<r<<" is "<<ans<<"\n";
+    ll objects,sample,answer;
+    cout<<"Enter the number of Objects(n)\n";
+    cin>>objects;
+    cout<<"Enter the number of Sample(r)\n";
+    cin>>sample;
+ 	answer=C(objects,sample,INF);
+ 	cout<<"The value of Combination(nCr) for numbers "<<objects<<" and "<<sample<<" is "<<answer<<"\n";
 }
